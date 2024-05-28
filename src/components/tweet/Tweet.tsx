@@ -33,13 +33,9 @@ const Tweet = ({post}: TweetProps) => {
     return await service.me()
   }
 
-  const getCountByType = (type: string): number => {
-    return actualPost?.reactions?.filter((r) => r.type === type).length ?? 0;
-  };
-
   const handleReaction = async (type: string) => {
-    const reacted = actualPost.reactions.find(
-        (r) => r.type === type && r.userId === user?.id
+    const reacted = actualPost.userReactions.find(
+        (r) => r.type === type
     );
     if (reacted) {
       await service.deleteReaction(reacted.id);
@@ -51,8 +47,8 @@ const Tweet = ({post}: TweetProps) => {
   };
 
   const hasReactedByType = (type: string): boolean => {
-    return actualPost.reactions.some(
-        (r) => r.type === type && r.userId === user?.id
+    return actualPost.userReactions.some(
+        (r) => r.type === type
     );
   };
 
@@ -100,7 +96,7 @@ const Tweet = ({post}: TweetProps) => {
         <StyledReactionsContainer>
           <Reaction
               img={IconType.CHAT}
-              count={actualPost?.comments?.length}
+              count={actualPost?.qtyComments}
               reactionFunction={() =>
                   window.innerWidth > 600
                       ? setShowCommentModal(true)
@@ -111,17 +107,17 @@ const Tweet = ({post}: TweetProps) => {
           />
           <Reaction
               img={IconType.RETWEET}
-              count={getCountByType("RETWEET")}
-              reactionFunction={() => handleReaction("RETWEET")}
+              count={actualPost.qtyRetweets}
+              reactionFunction={() => handleReaction("retweet")}
               increment={1}
-              reacted={hasReactedByType("RETWEET")}
+              reacted={hasReactedByType("retweet")}
           />
           <Reaction
               img={IconType.LIKE}
-              count={getCountByType("LIKE")}
-              reactionFunction={() => handleReaction("LIKE")}
+              count={actualPost.qtyLikes}
+              reactionFunction={() => handleReaction("like")}
               increment={1}
-              reacted={hasReactedByType("LIKE")}
+              reacted={hasReactedByType("like")}
           />
         </StyledReactionsContainer>
         <CommentModal

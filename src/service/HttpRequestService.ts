@@ -160,12 +160,11 @@ const httpRequestService = {
         try {
             const cancelToken = axios.CancelToken.source();
 
-            const response = await axios.get(`${url}/user/search`, {
+            const response = await axios.get(`${url}/user/search/${username}`, {
                 headers: {
                     Authorization: localStorage.getItem("token"),
                 },
                 params: {
-                    username,
                     limit,
                     skip,
                 },
@@ -335,13 +334,14 @@ const httpRequestService = {
         }
     },
     getCommentsByPostId: async (id: string) => {
-        const res = await axios.get(`${url}/post/comment/by_post/${id}`, {
+        const res = await axios.get(`${url}/comment/from_post/${id}`, {
             headers: {
                 Authorization: localStorage.getItem("token"),
             },
         });
         if (res.status === 200) {
-            return res.data;
+            console.log(res)
+            return res.data
         }
     },
 };
