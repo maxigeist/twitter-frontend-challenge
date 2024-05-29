@@ -1,5 +1,5 @@
-import React from "react";
-import {createBrowserRouter, Outlet} from "react-router-dom";
+import React, {useEffect} from "react";
+import {createBrowserRouter, Outlet, useNavigate} from "react-router-dom";
 import {StyledSideBarPageWrapper} from "../../pages/side-bar-page/SideBarPageWrapper";
 import NavBar from "../navbar/NavBar";
 import SignUpPage from "../../pages/auth/sign-up/SignUpPage";
@@ -12,6 +12,9 @@ import CommentPage from "../../pages/create-comment-page/CommentPage";
 import PostPage from "../../pages/post-page/PostPage";
 import {PrivateRoute} from "../private-route/PrivateRoute";
 import {PublicRoute} from "../public-route/PublicRoute";
+import {updateData} from "../../redux/user.info";
+import {useHttpRequestService} from "../../service/HttpRequestService";
+import {useAppDispatch} from "../../redux/hooks";
 
 const WithNav = () => {
     return (
@@ -21,6 +24,30 @@ const WithNav = () => {
         </StyledSideBarPageWrapper>
     );
 };
+
+const WithUser = () => {
+
+    const service = useHttpRequestService();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const handleSetUpUser = async () => {
+        try {
+            const data = await service.me();
+            dispatch(updateData(data));
+        } catch (e) {
+            navigate("/sign-in");
+        }
+    }
+    useEffect(() => {
+        handleSetUpUser().then()
+    }, []);
+
+    return (
+        <></>
+    )
+
+
+}
 
 export const ROUTER = createBrowserRouter([
         {
@@ -40,7 +67,7 @@ export const ROUTER = createBrowserRouter([
             element: <PrivateRoute/>,
             children: [
                 {
-                    element: <WithNav/>,
+                    element: <><WithNav/><WithUser/></>,
                     children: [
                         {
                             path: "/",

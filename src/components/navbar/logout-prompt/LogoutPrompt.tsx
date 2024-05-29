@@ -9,93 +9,84 @@ import {ButtonType} from "../../button/StyledButton";
 import {StyledPromptContainer} from "./PromptContainer";
 import {StyledContainer} from "../../common/Container";
 import {StyledP} from "../../common/text";
-import {useHttpRequestService} from "../../../service/HttpRequestService";
-import {User} from "../../../service";
+import {useSelector} from "react-redux";
+import {RootState} from "../../../redux/store";
 
 interface LogoutPromptProps {
-  show: boolean;
+    show: boolean;
 }
 
-const LogoutPrompt = ({ show }: LogoutPromptProps) => {
-  const [showPrompt, setShowPrompt] = useState<boolean>(show);
-  const [showModal, setShowModal] = useState<boolean>(false);
-  const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
-  const service = useHttpRequestService()
-  const [user, setUser] = useState<User>()
+const LogoutPrompt = ({show}: LogoutPromptProps) => {
+    const [showPrompt, setShowPrompt] = useState<boolean>(show);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    const navigate = useNavigate();
+    const {t, i18n} = useTranslation();
+    const user = useSelector((state: RootState) => state.userInfo);
 
 
-  useEffect(() => {
-    handleGetUser().then(r => setUser(r))
-  }, []);
-
-  const handleGetUser = async () => {
-    return await service.me()
-  }
-
-  const handleClick = () => {
-    setShowModal(true);
-  };
+    const handleClick = () => {
+        setShowModal(true);
+    };
 
 
-  const handleLanguageChange = () => {
-    if (i18n.language === "es") {
-      i18n.changeLanguage("en");
-    } else {
-      i18n.changeLanguage("es");
-    }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/sign-in");
-  };
-
-  useEffect(() => {
-    setShowPrompt(show);
-  }, [show]);
-
-  return (
-    <>
-      {showPrompt && (
-        <StyledPromptContainer>
-          <StyledContainer
-            flexDirection={"row"}
-            gap={"16px"}
-            borderBottom={"1px solid #ebeef0"}
-            padding={"16px"}
-            alignItems={"center"}
-          >
-            <StyledP primary>Es:</StyledP>
-            <SwitchButton
-              checked={i18n.language === "es"}
-              onChange={handleLanguageChange}
-            />
-          </StyledContainer>
-          <StyledContainer onClick={handleClick} alignItems={"center"}>
-            <StyledP primary>{`${t("buttons.logout")} @${
-              user?.username
-            }`}</StyledP>
-          </StyledContainer>
-        </StyledPromptContainer>
-      )}
-      <Modal
-        show={showModal}
-        text={t("modal-content.logout")}
-        img={logo}
-        title={t("modal-title.logout")}
-        acceptButton={
-          <Button
-            buttonType={ButtonType.FOLLOW}
-            text={t("buttons.logout")}
-            size={"MEDIUM"}
-            onClick={handleLogout}
-          />
+    const handleLanguageChange = () => {
+        if (i18n.language === "es") {
+            i18n.changeLanguage("en");
+        } else {
+            i18n.changeLanguage("es");
         }
-        onClose={() => setShowModal(false)}
-      />
-    </>
-  );
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/sign-in");
+    };
+
+    useEffect(() => {
+        setShowPrompt(show);
+    }, [show]);
+
+    return (
+        <>
+            {showPrompt && (
+                <StyledPromptContainer>
+                    <StyledContainer
+                        flexDirection={"row"}
+                        gap={"16px"}
+                        borderBottom={"1px solid #ebeef0"}
+                        padding={"16px"}
+                        alignItems={"center"}
+                    >
+                        <StyledP primary>Es:</StyledP>
+                        <SwitchButton
+                            checked={i18n.language === "es"}
+                            onChange={handleLanguageChange}
+                        />
+                    </StyledContainer>
+                    <StyledContainer onClick={handleClick} alignItems={"center"}>
+                        <StyledP primary>{`${t("buttons.logout")} @${
+                            user?.username
+                        }`}</StyledP>
+                    </StyledContainer>
+                </StyledPromptContainer>
+            )}
+            <Modal
+                show={showModal}
+                text={t("modal-content.logout")}
+                img={logo}
+                title={t("modal-title.logout")}
+                acceptButton={
+                    <Button
+                        buttonType={ButtonType.FOLLOW}
+                        text={t("buttons.logout")}
+                        size={"MEDIUM"}
+                        onClick={handleLogout}
+                    />
+                }
+                onClose={() => setShowModal(false)}
+            />
+        </>
+    );
 };
 
 export default LogoutPrompt;

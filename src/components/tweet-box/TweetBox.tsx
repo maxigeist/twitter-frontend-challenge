@@ -29,23 +29,14 @@ const TweetBox = ({parentId, close, mobile}: TweetBoxProps) => {
     const [images, setImages] = useState<File[]>([]);
     const [imagesPreview, setImagesPreview] = useState<string[]>([]);
 
-    const {length, query} = useSelector((state:RootState) => state.user);
+    const {length, query} = useSelector((state: RootState) => state.user);
     const httpService = useHttpRequestService();
     const dispatch = useDispatch();
     const {t} = useTranslation();
-    const service = useHttpRequestService()
-    const [user, setUser] = useState<User>()
+    const user = useSelector((state: RootState) => state.userInfo);
 
 
-    useEffect(() => {
-        handleGetUser().then(r => setUser(r))
-    }, []);
-
-    const handleGetUser = async () => {
-        return await service.me()
-    }
-
-    const handleChange = (e:  ChangeEvent<HTMLTextAreaElement>):void => {
+    const handleChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
         setContent(e.target.value);
     };
     const handleSubmit = async () => {
@@ -62,14 +53,14 @@ const TweetBox = ({parentId, close, mobile}: TweetBoxProps) => {
         }
     };
 
-    const handleRemoveImage = (index:number) => {
+    const handleRemoveImage = (index: number) => {
         const newImages = images.filter((i, idx) => idx !== index);
         const newImagesPreview = newImages.map((i) => URL.createObjectURL(i));
         setImages(newImages);
         setImagesPreview(newImagesPreview);
     };
 
-    const handleAddImage = (newImages:File[]) => {
+    const handleAddImage = (newImages: File[]) => {
         setImages(newImages);
         const newImagesPreview = newImages.map((i) => URL.createObjectURL(i));
         setImagesPreview(newImagesPreview);
