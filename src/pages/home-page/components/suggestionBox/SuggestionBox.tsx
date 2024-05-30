@@ -6,7 +6,7 @@ import { User } from "../../../../service";
 import { StyledSuggestionBoxContainer } from "./SuggestionBoxContainer";
 
 const SuggestionBox = () => {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<User[] | undefined>([]);
   const httpService = useHttpRequestService();
   const { t } = useTranslation();
 
@@ -23,7 +23,7 @@ const SuggestionBox = () => {
   return (
     <StyledSuggestionBoxContainer>
       <h6>{t("suggestion.who-to-follow")}</h6>
-      {users.length > 0 ? (
+      {users?.length ? (
         users
           .filter((value, index, array) => {
             return array.indexOf(value) === index;
@@ -41,7 +41,7 @@ const SuggestionBox = () => {
       ) : (
         <p>{t("suggestion.no-recommendations")}</p>
       )}
-      {users.length > 5 && (
+      {users && users?.length > 5 && (
         <a href="/recommendations">{t("suggestion.show-more")}</a>
       )}
     </StyledSuggestionBoxContainer>

@@ -10,19 +10,15 @@ const server = axios.create({
 })
 
 server.interceptors.response.use(
-    function (response) {
+    (response) => {
         return response
     },
-    function (error) {
-        try {
-            if (error.response.status === 401 || error.response.status === 403) {
-                localStorage.clear()
-                window.location.href = "/sign-in"
-            }
-            return Promise.reject(error)
-        }catch (error){
-            console.log(error)
+    (error) => {
+        if (error.response.status === 401 || error.response.status === 403) {
+            localStorage.clear()
+            window.location.href = "/sign-in"
         }
+        return error
     },
 )
 

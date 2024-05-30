@@ -5,14 +5,14 @@ import Tweet from "../tweet/Tweet";
 import Loader from "../loader/Loader";
 
 interface FeedProps {
-  posts: Post[];
+  posts?: Post[];
   loading: boolean;
 }
 
 const Feed = ({ posts, loading }: FeedProps) => {
   return (
     <StyledContainer width={"100%"} alignItems={"center"}>
-      {posts
+      {posts && posts
         .filter((post, index, self) => {
           return self.findIndex((p) => p.id === post.id) === index;
         })
