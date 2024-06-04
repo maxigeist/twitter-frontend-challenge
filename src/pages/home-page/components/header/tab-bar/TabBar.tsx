@@ -1,34 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, {useState} from "react";
 import Tab from "./tab/Tab";
-import { setQuery, updateFeed } from "../../../../../redux/user";
-import { useTranslation } from "react-i18next";
-import { useAppDispatch, useAppSelector } from "../../../../../redux/hooks";
-import { StyledTabBarContainer } from "./TabBarContainer";
-import { useGetLatestPosts } from "../../../../../query/queries";
+import {setQuery, updateFeed} from "../../../../../redux/user";
+import {useTranslation} from "react-i18next";
+import {useAppDispatch} from "../../../../../redux/hooks";
+import {StyledTabBarContainer} from "./TabBarContainer";
+import {useHttpRequestService} from "../../../../../service/HttpRequestService";
 
 const TabBar = () => {
     const [activeFirstPage, setActiveFirstPage] = useState(true);
     const dispatch = useAppDispatch();
-    const [query, setQueryAux] = useState(useAppSelector((state) => state.user.query))
-    const { isLoading, data: posts } = useGetLatestPosts(query);
-    const { t } = useTranslation();
+    const service = useHttpRequestService();
+    const {t} = useTranslation();
 
-    const handleClick = (value: boolean, newQuery: string) => {
+    const handleClick = async (value: boolean, query: string) => {
         setActiveFirstPage(value);
-        setQueryAux(newQuery)
-        dispatch(setQuery(newQuery));
+        const data = await service.getPosts(query).catch((e) => {
+            console.log(e);
+        });
+        dispatch(updateFeed(data));
+        dispatch(setQuery(query));
     };
 
-    useEffect(() => {
-        if (!isLoading) {
-            dispatch(updateFeed(posts));
-        }
-    }, [query, isLoading, posts, activeFirstPage]);
-
-
-    if (isLoading) {
-        return <h1>The page is loading</h1>;
-    }
 
     return (
         <StyledTabBarContainer>
