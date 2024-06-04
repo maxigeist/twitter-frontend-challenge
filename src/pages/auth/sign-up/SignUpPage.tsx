@@ -31,10 +31,17 @@ const SignUpPage = () => {
     };
   const handleSubmit = async () => {
     const { confirmPassword, ...requestData } = data;
-    httpRequestService
-      .signUp(requestData)
-      .then(() => navigate("/"))
-      .catch(() => setError(false));
+    try {
+      await httpRequestService.signUp(requestData)
+      navigate('/')
+    }
+    catch(error: any){
+      if (error.response.status === 409){
+        alert('A user with this credentials already exists')
+        setError(true)
+        setData({})
+      }
+    }
   };
 
   return (
