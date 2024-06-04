@@ -35,14 +35,14 @@ const TweetImage = ({
           </StyledRemoveIconContainer>
         )}
         <StyledTweetImage
-          src={src}
+          src={process.env.REACT_APP_AWS_BUCKET_ADDRESS + src}
           alt={alt}
           onClick={() => setShowModal(true)}
         />
       </StyledOverflowContainer>
       <ImageModal
         show={showModal}
-        src={src}
+        src={process.env.REACT_APP_AWS_BUCKET_ADDRESS + src}
         alt={alt}
         onClose={() => setShowModal(false)}
       />
