@@ -1,74 +1,101 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import logo from "../../../assets/logo.png";
-import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { useHttpRequestService } from "../../../service/HttpRequestService";
+import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
+import {useHttpRequestService} from "../../../service/HttpRequestService";
 import AuthWrapper from "../AuthWrapper";
 import LabeledInput from "../../../components/labeled-input/LabeledInput";
 import Button from "../../../components/button/Button";
-import { ButtonType } from "../../../components/button/StyledButton";
-import { StyledH3 } from "../../../components/common/text";
+import {ButtonType} from "../../../components/button/StyledButton";
+import {StyledH3} from "../../../components/common/text";
+import {Formik} from "formik";
 
 const SignInPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(false);
+    // const [email, setEmail] = useState("");
+    // const [password, setPassword] = useState("");
+    const [error, setError] = useState(false);
 
-  const httpRequestService = useHttpRequestService();
-  const navigate = useNavigate();
-  const { t } = useTranslation();
+    const httpRequestService = useHttpRequestService();
+    const navigate = useNavigate();
+    const {t} = useTranslation();
 
-  const handleSubmit = () => {
-    httpRequestService
-      .signIn({ email, password })
-      .then(() => navigate("/"))
-      .catch(() => setError(true));
-  };
+    return (
+        <AuthWrapper>
+            <div className={"border"}>
+                <div className={"container"}>
+                    <div className={"header"}>
+                        <img src={logo} alt={"Twitter Logo"}/>
+                        <StyledH3>{t("title.login")}</StyledH3>
+                    </div>
 
-  return (
-    <AuthWrapper>
-      <div className={"border"}>
-        <div className={"container"}>
-          <div className={"header"}>
-            <img src={logo} alt={"Twitter Logo"} />
-            <StyledH3>{t("title.login")}</StyledH3>
-          </div>
-          <div className={"input-container"}>
-            <LabeledInput
-              required
-              placeholder={"Enter user..."}
-              title={t("input-params.username")}
-              error={error}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <LabeledInput
-              type="password"
-              required
-              placeholder={"Enter password..."}
-              title={t("input-params.password")}
-              error={error}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <p className={"error-message"}>{error && t("error.login")}</p>
-          </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            <Button
-              text={t("buttons.login")}
-              buttonType={ButtonType.FOLLOW}
-              size={"MEDIUM"}
-              onClick={handleSubmit}
-            />
-            <Button
-              text={t("buttons.register")}
-              buttonType={ButtonType.OUTLINED}
-              size={"MEDIUM"}
-              onClick={() => navigate("/sign-up")}
-            />
-          </div>
-        </div>
-      </div>
-    </AuthWrapper>
-  );
+                    <Formik initialValues={{email: '', password: ''}}
+                            onSubmit={(values, {setSubmitting}) => {
+                                setTimeout(() => {
+                                    httpRequestService
+                                        .signIn(values)
+                                        .then(() => navigate("/"))
+                                        .catch(() => setError(true));
+                                    setSubmitting(false);
+                                }, 400);
+                            }}>
+                        {({
+                              values,
+                              handleChange,
+                              handleSubmit,
+                              isSubmitting,
+                          }) => (
+                            <form onSubmit={handleSubmit}>
+                                <div className={"input-container"}>
+                                    <LabeledInput
+                                        name="email"
+                                        required
+                                        placeholder={"Enter email..."}
+                                        title={t("input-params.email")}
+                                        error={error}
+                                        onChange={handleChange}
+                                        value={values.email}
+                                    />
+                                    <LabeledInput
+                                        name="password"
+                                        type="password"
+                                        required
+                                        placeholder={"Enter password..."}
+                                        title={t("input-params.password")}
+                                        error={error}
+                                        onChange={handleChange}
+                                        value={values.password}
+                                    />
+                                </div>
+                                <div style={{
+                                    display: "flex",
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    flexDirection: 'column',
+                                    marginTop: 6
+                                }}>
+                                    <Button
+                                        type="submit"
+                                        text={t("buttons.login")}
+                                        buttonType={ButtonType.FOLLOW}
+                                        size={"MEDIUM"}
+                                        disabled={isSubmitting}
+                                    />
+                                    <Button
+                                        text={t("buttons.register")}
+                                        buttonType={ButtonType.OUTLINED}
+                                        size={"MEDIUM"}
+                                        onClick={() => navigate("/sign-up")}
+                                    />
+                                </div>
+                            </form>
+                        )}
+                    </Formik>
+                    <p className={"error-message"}>{error && t("error.login")}</p>
+
+                </div>
+            </div>
+        </AuthWrapper>
+    );
 };
 
 export default SignInPage;
