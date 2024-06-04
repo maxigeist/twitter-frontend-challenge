@@ -56,7 +56,11 @@ const httpRequestService = {
         }
     },
     createPost: async (data: PostData) => {
-        const res = await server.post(`${url}/post`, data);
+        const imagesId = data.images?.map((image) => {
+            return crypto.randomUUID()
+        })
+        console.log(imagesId)
+        const res = await server.post(`${url}/post`, {images: imagesId, content: data.content, parentId: data.parentId});
         if (res.status === 201) {
             const {upload} = S3Service;
             for (const imageUrl of res.data.images) {

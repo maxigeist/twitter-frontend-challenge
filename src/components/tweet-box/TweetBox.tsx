@@ -14,6 +14,7 @@ import {StyledButtonContainer} from "./ButtonContainer";
 import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
 import {User} from "../../service";
+import {useGetLatestPosts} from "../../query/queries";
 
 
 interface TweetBoxProps {
@@ -30,6 +31,7 @@ const TweetBox = ({parentId, close, mobile}: TweetBoxProps) => {
     const [imagesPreview, setImagesPreview] = useState<string[]>([]);
 
     const {length, query} = useSelector((state: RootState) => state.user);
+    const {isLoading, data: postsRq} = useGetLatestPosts(query)
     const httpService = useHttpRequestService();
     const dispatch = useDispatch();
     const {t} = useTranslation();
@@ -41,12 +43,14 @@ const TweetBox = ({parentId, close, mobile}: TweetBoxProps) => {
     };
     const handleSubmit = async () => {
         try {
+            await httpService.createPost({content, parentId: parentId, images});
             setContent("");
             setImages([]);
             setImagesPreview([]);
-            dispatch(setLength(length + 1));
-            const posts = await httpService.getPosts(query);
-            dispatch(updateFeed(posts));
+            httpService.getCommentsByPostId(parentId!!).then((res) => {
+                dispatch(updateFeed(res));
+                dispatch(setLength(res.length));
+            });
             close && close();
         } catch (e) {
             console.log(e);
@@ -65,6 +69,10 @@ const TweetBox = ({parentId, close, mobile}: TweetBoxProps) => {
         const newImagesPreview = newImages.map((i) => URL.createObjectURL(i));
         setImagesPreview(newImagesPreview);
     };
+
+    if (isLoading){
+        return <h1>The page is loading</h1>
+    }
 
     return (
         <StyledTweetBoxContainer>
