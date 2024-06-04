@@ -39,7 +39,7 @@ const StyledSignInWrapper = styled.div`
   .error-message {
     color: #e03c39;
     font-family: Manrope, sans-serif;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 13px;
     letter-spacing: -0.01em;

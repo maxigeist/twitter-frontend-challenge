@@ -11,8 +11,6 @@ import {StyledH3} from "../../../components/common/text";
 import {Formik} from "formik";
 
 const SignInPage = () => {
-    // const [email, setEmail] = useState("");
-    // const [password, setPassword] = useState("");
     const [error, setError] = useState(false);
 
     const httpRequestService = useHttpRequestService();
@@ -30,13 +28,11 @@ const SignInPage = () => {
 
                     <Formik initialValues={{email: '', password: ''}}
                             onSubmit={(values, {setSubmitting}) => {
-                                setTimeout(() => {
-                                    httpRequestService
-                                        .signIn(values)
-                                        .then(() => navigate("/"))
-                                        .catch(() => setError(true));
-                                    setSubmitting(false);
-                                }, 400);
+                                httpRequestService
+                                    .signIn(values)
+                                    .then(() => navigate("/"))
+                                    .catch(() => setError(true));
+                                setSubmitting(false);
                             }}>
                         {({
                               values,

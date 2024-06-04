@@ -33,7 +33,7 @@
     "comment" : "Tweet your reply"
   },
   "error": {
-    "login": "Sorry, your username or password was incorrect. Please try again."
+    "login": "Sorry, your email or password was incorrect. Please try again."
   },
   "input-params": {
     "username": "Username",
