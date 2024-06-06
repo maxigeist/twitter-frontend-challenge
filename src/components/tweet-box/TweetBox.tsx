@@ -14,6 +14,8 @@ import {StyledButtonContainer} from "./ButtonContainer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
 import {useGetLatestPosts} from "../../query/queries";
+import {updateToastData} from "../../redux/toast";
+import {ToastType} from "../toast/Toast";
 
 
 interface TweetBoxProps {
@@ -24,7 +26,7 @@ interface TweetBoxProps {
 }
 
 
-const TweetBox = ({parentId, close, mobile}: TweetBoxProps) => {
+const TweetBox = ({parentId = '', close, mobile}: TweetBoxProps) => {
     const [content, setContent] = useState("");
     const [images, setImages] = useState<File[]>([]);
     const [imagesPreview, setImagesPreview] = useState<string[]>([]);
@@ -42,14 +44,16 @@ const TweetBox = ({parentId, close, mobile}: TweetBoxProps) => {
     };
     const handleSubmit = async () => {
         try {
-            await httpService.createPost({content, parentId: parentId, images});
+            await httpService.createPost({content, parentId: parentId ? parentId : '', images});
+            dispatch(updateToastData({message: "The tweet was created correctly",type:ToastType.SUCCESS, show:true }))
             setContent("");
             setImages([]);
             setImagesPreview([]);
-            httpService.getCommentsByPostId(parentId!!).then((res) => {
+            (parentId &&
+            httpService.getCommentsByPostId(parentId).then((res) => {
                 dispatch(updateFeed(res));
                 dispatch(setLength(res.length));
-            });
+            }));
             close && close();
         } catch (e) {
             console.log(e);

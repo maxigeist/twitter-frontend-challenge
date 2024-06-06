@@ -83,7 +83,6 @@ const SignUpPage = () => {
                                         onChange={handleChange}
                                         value={values.name}
                                     />
-                                    <p></p>
                                     <LabeledInput
                                         name='username'
                                         required
@@ -93,7 +92,6 @@ const SignUpPage = () => {
                                         onChange={handleChange}
                                         value={values.username}
                                     />
-                                    <p></p>
                                     <LabeledInput
                                         name='email'
                                         required
@@ -103,8 +101,8 @@ const SignUpPage = () => {
                                         onChange={handleChange}
                                         value={values.email}
                                     />
-                                    <p className={'error-message'}>{touched.email && errors.email}
-                                    </p>
+                                    {touched.email && <p className={'error-message'}>{errors.email}
+                                    </p>}
                                     <LabeledInput
                                         name='password'
                                         type="password"
@@ -115,8 +113,8 @@ const SignUpPage = () => {
                                         onChange={handleChange}
                                         value={values.password}
                                     />
-                                    <p className={'error-message'}>{errors.password && touched.password}
-                                    </p>
+                                    {touched.password && <p className={'error-message'}>{errors.password}
+                                    </p>}
                                     <LabeledInput
                                         name='confirmPassword'
                                         type="password"
@@ -127,12 +125,12 @@ const SignUpPage = () => {
                                         onChange={handleChange}
                                         value={values.confirmPassword}
                                     />
-                                    <p className={'error-message'}>{errors.password && touched.password}
-                                    </p>
+                                    {touched.password && <p className={'error-message'}>{errors.password}
+                                    </p>}
                                 </div>
                                 <div style={{
                                     display: "flex", flexDirection: "column", alignItems: 'center',
-                                    justifyContent: 'center'
+                                    justifyContent: 'center', marginTop:'10px'
                                 }}>
                                     <Button
                                         type='submit'

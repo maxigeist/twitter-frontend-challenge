@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {createBrowserRouter, Outlet, useNavigate} from "react-router-dom";
 import {StyledSideBarPageWrapper} from "../../pages/side-bar-page/SideBarPageWrapper";
 import NavBar from "../navbar/NavBar";
@@ -14,7 +14,8 @@ import {PrivateRoute} from "../private-route/PrivateRoute";
 import {PublicRoute} from "../public-route/PublicRoute";
 import {updateData} from "../../redux/user.info";
 import {useHttpRequestService} from "../../service/HttpRequestService";
-import {useAppDispatch} from "../../redux/hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
+import Toast from "../toast/Toast";
 
 const WithNav = () => {
     return (
@@ -25,8 +26,19 @@ const WithNav = () => {
     );
 };
 
-const WithUser = () => {
+const WithToast = () => {
+    const toastProps = useAppSelector((state) => state.toast)
 
+    return (
+        <>
+            <Toast message={toastProps.message} type={toastProps.type} show={toastProps.show}></Toast>
+            <Outlet/>
+        </>
+    )
+}
+
+
+const WithUser = () => {
     const service = useHttpRequestService();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -51,51 +63,57 @@ const WithUser = () => {
 
 export const ROUTER = createBrowserRouter([
         {
-            element: <PublicRoute/>,
+            element: <WithToast/>,
             children: [
                 {
-                    path: "/sign-up",
-                    element: <SignUpPage/>,
+                    element: <PublicRoute/>,
+                    children: [
+
+                        {
+                            path: "/sign-up",
+                            element: <SignUpPage/>,
+                        },
+                        {
+                            path: "/sign-in",
+                            element: <SignInPage/>,
+                        },
+                    ]
                 },
                 {
-                    path: "/sign-in",
-                    element: <SignInPage/>,
-                },
-            ]
-        },
-        {
-            element: <PrivateRoute/>,
-            children: [
-                {
-                    element: <><WithNav/><WithUser/></>,
+                    element: <PrivateRoute/>,
                     children: [
                         {
-                            path: "/",
-                            element: <HomePage/>,
-                        },
-                        {
-                            path: "/recommendations",
-                            element: <RecommendationPage/>,
-                        },
-                        {
-                            path: "/profile/:id",
-                            element: <ProfilePage/>,
-                        },
-                        {
-                            path: "/post/:id",
-                            element: <PostPage/>,
-                        },
-                        {
-                            path: "/compose/tweet",
-                            element: <TweetPage/>,
-                        },
-                        {
-                            path: "/post/:id",
-                            element: <CommentPage/>,
-                        },
-                    ],
+                            element: <><WithNav/><WithUser/></>,
+                            children: [
+                                {
+                                    path: "/",
+                                    element: <HomePage/>,
+                                },
+                                {
+                                    path: "/recommendations",
+                                    element: <RecommendationPage/>,
+                                },
+                                {
+                                    path: "/profile/:id",
+                                    element: <ProfilePage/>,
+                                },
+                                {
+                                    path: "/post/:id",
+                                    element: <PostPage/>,
+                                },
+                                {
+                                    path: "/compose/tweet",
+                                    element: <TweetPage/>,
+                                },
+                                {
+                                    path: "/post/:id",
+                                    element: <CommentPage/>,
+                                },
+                            ],
 
-                }]
+                        }]
+                }
+            ]
         }
     ])
 ;

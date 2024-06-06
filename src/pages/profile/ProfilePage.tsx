@@ -3,17 +3,19 @@ import ProfileInfo from "./ProfileInfo";
 import {useNavigate, useParams} from "react-router-dom";
 import Modal from "../../components/modal/Modal";
 import {useTranslation} from "react-i18next";
-import {Author, User} from "../../service";
+import {User} from "../../service";
 import {ButtonType} from "../../components/button/StyledButton";
 import {useHttpRequestService} from "../../service/HttpRequestService";
 import Button from "../../components/button/Button";
 import ProfileFeed from "../../components/feed/ProfileFeed";
 import {StyledContainer} from "../../components/common/Container";
 import {StyledH5} from "../../components/common/text";
-import {useAppSelector} from "../../redux/hooks";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {RootState} from "../../redux/store";
 
 import {useGetUserProfile, useMutateOnFollow, useMutateOnUnfollow} from "../../query/queries";
+import {updateToastData} from "../../redux/toast";
+import {ToastType} from "../../components/toast/Toast";
 
 const ProfilePage = () => {
     const [following, setFollowing] = useState<boolean>(false);
@@ -26,6 +28,7 @@ const ProfilePage = () => {
     });
     const service = useHttpRequestService()
     const user = useAppSelector((state: RootState) => state.userInfo);
+    const dispatch = useAppDispatch();
     const id = useParams().id;
     const {isLoading, data} = useGetUserProfile(id)
     const {mutation: mutationUnfollow} = useMutateOnUnfollow()
@@ -88,6 +91,7 @@ const ProfilePage = () => {
     const getProfileData = async () => {
         setProfile(data)
         setFollowing(data?.followers.length!! > 0)
+        dispatch(updateToastData({message: 'You need to follow this user to see its content',type: ToastType.ALERT, show:data?.followers.length!! === 0 && data?.private}))
     };
 
     if (isLoading) {

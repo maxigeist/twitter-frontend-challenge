@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import logo from "../../../assets/logo.png";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
@@ -11,13 +11,21 @@ import {StyledH3} from "../../../components/common/text";
 import {Formik} from "formik";
 import Input from "../../../components/styled-input/Input";
 import {InputContainerSize} from "../../../components/styled-input/InputContainer";
+import {useAppDispatch} from "../../../redux/hooks";
+import {updateToastData} from "../../../redux/toast";
+import {ToastType} from "../../../components/toast/Toast";
 
 const SignInPage = () => {
     const [error, setError] = useState(false);
 
     const httpRequestService = useHttpRequestService();
     const navigate = useNavigate();
+    const dispatch = useAppDispatch()
     const {t} = useTranslation();
+
+    useEffect(() => {
+
+    }, [error]);
 
     return (
         <AuthWrapper>
@@ -33,7 +41,10 @@ const SignInPage = () => {
                                 httpRequestService
                                     .signIn(values)
                                     .then(() => navigate("/"))
-                                    .catch(() => setError(true));
+                                    .catch(() => {
+                                        dispatch(updateToastData({message: 'You were not able to sign in',type: ToastType.ALERT, show:true}))
+                                        setError(true)
+                                    });
                                 setSubmitting(false);
                             }}>
                         {({
