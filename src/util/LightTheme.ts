@@ -8,6 +8,7 @@ export const LightTheme: Partial<Theme> = {
     white: "#FFFFFF",
     inactiveBackground: "#F0F3F4",
     containerLine: "#F0F3F4",
+    transparent: "rgba(255,255,255,0)",
     hover: "#E7E7E8",
     outline: "#D1D9DD",
     text: "#566370",
@@ -40,6 +41,7 @@ export type Theme = {
     dark: string;
     error: string;
     white: string;
+    transparent:string;
     inactiveBackground: string;
     containerLine: string;
     hover: string;
@@ -48,6 +50,11 @@ export type Theme = {
     black: string;
     errorContainer: string;
   };
+  size:{
+    small:string,
+    medium:string,
+    large:string,
+  }
   hover: {
     default: string;
     follow: string;

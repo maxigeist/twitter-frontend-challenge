@@ -1,8 +1,7 @@
-import type {ChangeEvent} from "react";
 import React, {useState} from "react";
 import logo from "../../../assets/logo.png";
 import {useNavigate} from "react-router-dom";
-import {useSSR, useTranslation} from "react-i18next";
+import {useTranslation} from "react-i18next";
 import AuthWrapper from "../../../pages/auth/AuthWrapper";
 import {useHttpRequestService} from "../../../service/HttpRequestService";
 import LabeledInput from "../../../components/labeled-input/LabeledInput";

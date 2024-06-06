@@ -9,6 +9,8 @@ import Button from "../../../components/button/Button";
 import {ButtonType} from "../../../components/button/StyledButton";
 import {StyledH3} from "../../../components/common/text";
 import {Formik} from "formik";
+import Input from "../../../components/styled-input/Input";
+import {InputContainerSize} from "../../../components/styled-input/InputContainer";
 
 const SignInPage = () => {
     const [error, setError] = useState(false);
@@ -42,15 +44,15 @@ const SignInPage = () => {
                           }) => (
                             <form onSubmit={handleSubmit}>
                                 <div className={"input-container"}>
-                                    <LabeledInput
-                                        name="email"
-                                        required
-                                        placeholder={"Enter email..."}
+                                    <Input
+                                        name={'email'}
+                                        sizing={InputContainerSize.LARGE}
                                         title={t("input-params.email")}
+                                        placeholder={"Enter email..."}
+                                        required
                                         error={error}
                                         onChange={handleChange}
-                                        value={values.email}
-                                    />
+                                        value={values.email}/>
                                     <LabeledInput
                                         name="password"
                                         type="password"

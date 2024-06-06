@@ -7,7 +7,7 @@ const spinAnimation = keyframes`
   }
 `;
 
-const StyledLoaderContainer = styled.div`
+const   StyledLoaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

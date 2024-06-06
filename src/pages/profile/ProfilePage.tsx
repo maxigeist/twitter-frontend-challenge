@@ -87,7 +87,7 @@ const ProfilePage = () => {
 
     const getProfileData = async () => {
         setProfile(data)
-        setFollowing(data?.followers!!.some((follower:Author) => follower.id === user?.id)!!)
+        setFollowing(data?.followers.length!! > 0)
     };
 
     if (isLoading) {

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, ChangeEventHandler, useEffect, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import Button from "../button/Button";
 import TweetInput from "../tweet-input/TweetInput";
 import {useHttpRequestService} from "../../service/HttpRequestService";
@@ -11,9 +11,8 @@ import {ButtonType} from "../button/StyledButton";
 import {StyledTweetBoxContainer} from "./TweetBoxContainer";
 import {StyledContainer} from "../common/Container";
 import {StyledButtonContainer} from "./ButtonContainer";
-import {TypedUseSelectorHook, useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
-import {User} from "../../service";
 import {useGetLatestPosts} from "../../query/queries";
 
 

@@ -4,10 +4,10 @@ import {useHttpRequestService} from "../../service/HttpRequestService";
 import UserDataBox from "../user-data-box/UserDataBox";
 import {useTranslation} from "react-i18next";
 import {ButtonType} from "../button/StyledButton";
-import "./FollowUserBox.css";
 import {Author} from "../../service";
 import {useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
+import {StyledFollowUserBoxContainer} from "./FollowUserBoxContainer";
 
 interface FollowUserBoxProps {
     profilePicture?: string;
@@ -46,7 +46,7 @@ const FollowUserBox = ({
         };
 
         return (
-            <div className="box-container">
+            <StyledFollowUserBoxContainer>
                 <UserDataBox
                     id={id}
                     name={name!}
@@ -59,7 +59,7 @@ const FollowUserBox = ({
                     size={"SMALL"}
                     onClick={handleFollow}
                 />
-            </div>
+            </StyledFollowUserBoxContainer>
         );
     }
 ;
