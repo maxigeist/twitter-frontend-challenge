@@ -5,6 +5,8 @@ import { ButtonType } from "../button/StyledButton";
 import { StyledModalContainer } from "./ModalContainer";
 import { StyledContainer } from "../common/Container";
 import { StyledH5, StyledP } from "../common/text";
+import {modalRoot} from "./ModalPosition";
+import {createPortal} from 'react-dom';
 
 interface ModalProps {
   show: boolean;
@@ -26,6 +28,7 @@ const Modal = ({
   return (
     <>
       {show && (
+          createPortal(
         <StyledBlurredBackground>
           <StyledModalContainer>
             <StyledContainer alignItems={"center"} justifyContent={"center"}>
@@ -54,7 +57,8 @@ const Modal = ({
               </StyledContainer>
             </StyledContainer>
           </StyledModalContainer>
-        </StyledBlurredBackground>
+        </StyledBlurredBackground>, modalRoot!!
+          )
       )}
     </>
   );
