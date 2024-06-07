@@ -94,10 +94,6 @@ const ProfilePage = () => {
         dispatch(updateToastData({message: 'You need to follow this user to see its content',type: ToastType.ALERT, show:data?.followers.length!! === 0 && data?.private}))
     };
 
-    if (isLoading) {
-        return (<h1>The page is loading</h1>)
-    }
-
     return (
         <>
             <StyledContainer

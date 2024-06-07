@@ -6,17 +6,17 @@ type ContainerProps = {
 } & CSSProperties;
 
 const ContainerBase = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  box-sizing: border-box;
-  transition: 0.3s ease-in-out;
-  position: relative;
-  scrollbar-width: auto;
-  border-radius: 0;
-  min-height: auto;
-  min-width: 0;
-  width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box;
+    transition: 0.3s ease-in-out;
+    position: relative;
+    scrollbar-width: auto;
+    border-radius: 0;
+    min-height: auto;
+    min-width: 0;
+    width: 100%;
 `;
 
 export const StyledContainer = styled(ContainerBase).attrs<ContainerProps>(
@@ -46,7 +46,9 @@ export const StyledContainer = styled(ContainerBase).attrs<ContainerProps>(
 // </StyledContainer>
 
 export const StyledScrollableContainer = styled(StyledContainer)`
-  scrollbar-width: none;
+  scrollbar-width: auto;
+    overflow-y: auto;
+    max-height: 600px;
 `;
 
 export const StyledOverflowContainer = styled(StyledContainer)``;

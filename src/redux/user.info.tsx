@@ -8,10 +8,10 @@ const initialState: User = {
     profilePicture: "",
     username: "",
     private: false,
-    createdAt: new Date(),
     followers: [],
     following: [],
     posts: [],
+    createdAt: new Date().toISOString(),
 }
 
 const userInfoSlice = createSlice({
