@@ -42,7 +42,7 @@ const SignInPage = () => {
                                     .signIn(values)
                                     .then(() => navigate("/"))
                                     .catch(() => {
-                                        dispatch(updateToastData({message: 'You were not able to sign in',type: ToastType.ALERT, show:true}))
+                                        dispatch(updateToastData({message: 'You were not able to sign in',type: ToastType.ALERT}))
                                         setError(true)
                                     });
                                 setSubmitting(false);

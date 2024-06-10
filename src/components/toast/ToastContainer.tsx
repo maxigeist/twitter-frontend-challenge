@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { ToastType } from "./Toast";
 import { Theme } from "../../util/LightTheme";
 
+
 interface ToastContainerProps {
   type: ToastType;
   theme: Theme;

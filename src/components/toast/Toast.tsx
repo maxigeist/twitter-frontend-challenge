@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {StyledToastContainer} from "./ToastContainer";
 import {AlertIcon, SuccessIcon} from "../icon/Icon";
+import {useAppDispatch} from "../../redux/hooks";
+import {updateMessage} from "../../redux/toast";
 
 export enum ToastType {
     ALERT = "ALERT",
@@ -14,23 +16,25 @@ export interface ToastProps {
 }
 
 const Toast = ({message, type, show}: ToastProps) => {
-    const [isShown, setIsShown] = useState<boolean>(show ?? true);
-
+    const isShown = !!message
+    const dispatch = useAppDispatch()
+    const messagefunc = dispatch(updateMessage(message))
     const iconMap = {
         [ToastType.ALERT]: <AlertIcon/>,
         [ToastType.SUCCESS]: <SuccessIcon/>
     };
 
+    const closeToast = () => {
+        dispatch(updateMessage(''))
+    }
+
     const toastIcon = iconMap[type] || null;
 
-    useEffect(() => {
-        setIsShown(show!!);
-    }, [show]);
 
     return (
         <>
             {isShown && (
-                <StyledToastContainer type={type} onClick={() => setIsShown(false)}>
+                <StyledToastContainer type={type} onClick={() => closeToast()}>
                     {toastIcon}
                     <p>{message}</p>
                 </StyledToastContainer>

@@ -10,6 +10,6 @@ export const StyledH3 = styled.h3`
   font-weight: 700;
   line-height: 110%;
   letter-spacing: -0.1px;
-  margin: 0;
+  margin: 5px;
   text-align: center;
 `;

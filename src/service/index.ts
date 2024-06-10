@@ -67,13 +67,24 @@ export interface MessageDTO {
     id: string;
     content: string;
     createdAt: Date;
-    chatId: string;
+    conversationId: string;
     senderId: string;
     sender: Author;
 }
 
 export interface ChatDTO {
     id: string;
+    name:string;
     users: Author[];
     messages: MessageDTO[];
 }
+
+
+export interface ChatViewDTO {
+    id:string;
+    name:string;
+    lastMessage: MessageDTO;
+    picture: string;
+}
+
+

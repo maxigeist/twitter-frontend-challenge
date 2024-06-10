@@ -65,6 +65,15 @@ const NavBar = () => {
                         selectedIcon={IconType.ACTIVE_PROFILE}
                         active={location.pathname === `/profile/${user?.id}`}
                     />
+                    <NavItem
+                        title={'Chat'}
+                        onClick={() => {
+                            navigate('/chat')
+                        }}
+                        icon={IconType.CHAT}
+                        selectedIcon={IconType.ACTIVE_CHAT}
+                        active={location.pathname === '/chat'}
+                    />
                     <StyledTweetButton
                         onClick={() =>
                             window.innerWidth > 600

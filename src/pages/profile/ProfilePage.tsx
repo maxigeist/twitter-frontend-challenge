@@ -91,7 +91,7 @@ const ProfilePage = () => {
     const getProfileData = async () => {
         setProfile(data)
         setFollowing(data?.followers.length!! > 0)
-        dispatch(updateToastData({message: 'You need to follow this user to see its content',type: ToastType.ALERT, show:data?.followers.length!! === 0 && data?.private}))
+        data?.followers.length === 0 && data?.id !== user.id && data.private  && dispatch(updateToastData({message: 'You need to follow this user to see its content',type: ToastType.ALERT}))
     };
 
     return (

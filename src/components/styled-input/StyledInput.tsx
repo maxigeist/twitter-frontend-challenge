@@ -5,8 +5,8 @@ import {InputContainerProps} from "./InputContainer";
 
 export const StyledInput = styled.input<InputContainerProps>`
     font-size: 16px;
-    border: none;
     outline: none;
+    border: none;
     background: none;
     margin-left: 8px;
     display: flex;

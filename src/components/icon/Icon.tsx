@@ -11,6 +11,7 @@ export enum IconType {
     BACK_ARROW = "backArrow",
     CANCEL = "cancel",
     CHAT = "chat",
+    ACTIVE_CHAT = 'active_chat',
     DISPLAY = "display",
     IMAGE = "image",
     RETWEET = "retweet",
@@ -43,6 +44,7 @@ export const Icon = (props: IconProps) => {
         [IconType.BACK_ARROW]: <BackArrowIcon {...props} />,
         [IconType.CANCEL]: <CancelIcon {...props} />,
         [IconType.CHAT]: <ChatIcon {...props} />,
+        [IconType.ACTIVE_CHAT]: <ActiveChatIcon {...props}/>,
         [IconType.DISPLAY]: <DisplayIcon {...props} />,
         [IconType.IMAGE]: <ImageIcon {...props} />,
         [IconType.RETWEET]: <RetweetIcon {...props} />,
@@ -63,7 +65,7 @@ export const SuccessIcon = (props: IconProps) => {
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 448 512"
             onClick={props.onClick}
-            >
+        >
             <path
                 fill={props.color ? props.color : "#64cc47"}
                 d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/>
@@ -326,22 +328,39 @@ export const ChatIcon = (props: IconProps) => {
         <svg
             width={props.width ? props.width : "24"}
             height={props.height ? props.height : "24"}
-            viewBox="0 0 24 24"
-            fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            fill="none"
             onClick={props.onClick}
+            viewBox="0 0 512 512"
             cursor={"pointer"}
         >
-            <g id="SVG=Chat">
-                <path
-                    id="Vector"
-                    d="M19.9 1H3.1C1.945 1 1 1.99 1 3.2V23L5.2 18.6H19.9C21.055 18.6 22 17.61 22 16.4V3.2C22 1.99 21.055 1 19.9 1ZM18.85 16.4H5.2L3.1 18.6V4.3C3.1 3.695 3.5725 3.2 4.15 3.2H18.85C19.4275 3.2 19.9 3.695 19.9 4.3V15.3C19.9 15.905 19.4275 16.4 18.85 16.4Z"
-                    fill={props.color ? props.color : "black"}
-                />
-            </g>
+            <path
+                d="M160 368c26.5 0 48 21.5 48 48v16l72.5-54.4c8.3-6.2 18.4-9.6 28.8-9.6H448c8.8 0 16-7.2 16-16V64c0-8.8-7.2-16-16-16H64c-8.8 0-16 7.2-16 16V352c0 8.8 7.2 16 16 16h96zm48 124l-.2 .2-5.1 3.8-17.1 12.8c-4.8 3.6-11.3 4.2-16.8 1.5s-8.8-8.2-8.8-14.3V474.7v-6.4V468v-4V416H112 64c-35.3 0-64-28.7-64-64V64C0 28.7 28.7 0 64 0H448c35.3 0 64 28.7 64 64V352c0 35.3-28.7 64-64 64H309.3L208 492z"
+                fill={props.color ? props.color : "black"}
+            />
         </svg>
     );
 };
+export const ActiveChatIcon = (props: IconProps) => {
+    return (
+
+        <svg
+            width={props.width ? props.width : "24"}
+            height={props.height ? props.height : "24"}
+            viewBox="0 0 512 512"
+            fill="none"
+            onClick={props.onClick}
+            xmlns="http://www.w3.org/2000/svg"
+            cursor={"pointer"}
+        >
+            <path
+                d="M64 0C28.7 0 0 28.7 0 64V352c0 35.3 28.7 64 64 64h96v80c0 6.1 3.4 11.6 8.8 14.3s11.9 2.1 16.8-1.5L309.3 416H448c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64z"
+                fill={props.color ? props.color : "black"}
+            />
+        </svg>
+    )
+}
+
 
 export const DisplayIcon = (props: IconProps) => {
     return (

@@ -12,7 +12,8 @@ export enum ButtonVariant{
     FULFILLED = 'FULFILLED',
     GHOST = 'GHOST',
     DISABLED = 'DISABLED',
-    WHITE = 'WHITE'
+    WHITE = 'WHITE',
+    SUCCESS = 'SUCCESS'
 }
 
 interface ButtonProps{
@@ -36,7 +37,6 @@ export const StyledButton = styled.button<ButtonProps>`
             case 'LARGE':
                 return '175px'
     }}};
-    margin-bottom: 8px;
     height: 33px;
     left: 16px;
     top: 16px;
@@ -46,6 +46,8 @@ export const StyledButton = styled.button<ButtonProps>`
                 return props.theme.colors.white;
             case 'FULFILLED':
                 return props.theme.colors.main;
+            case 'SUCCESS':
+                return props.theme.colors.success
             case 'GHOST':
                 return props.theme.colors.transparent
             case "DISABLED":

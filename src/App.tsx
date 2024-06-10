@@ -7,7 +7,7 @@ const App = () => {
     const queryClient = new QueryClient()
     return (
         <QueryClientProvider client={queryClient}>
-            <Layout/>;
+            <Layout/>
         </QueryClientProvider>
     );
 };

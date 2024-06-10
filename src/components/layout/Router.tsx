@@ -16,6 +16,11 @@ import {updateData} from "../../redux/user.info";
 import {useHttpRequestService} from "../../service/HttpRequestService";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import Toast from "../toast/Toast";
+import ChatPage from "../../pages/chat/ChatPage";
+import Chat from "../chat/Chat";
+import {socket} from "../../socket/socket";
+import {ChatViewDTO} from "../../service";
+import {updateChats} from "../../redux/socket";
 
 const WithNav = () => {
     return (
@@ -31,10 +36,28 @@ const WithToast = () => {
 
     return (
         <>
-            <Toast message={toastProps.message} type={toastProps.type} show={toastProps.show}></Toast>
+            <Toast message={toastProps.message} type={toastProps.type}></Toast>
             <Outlet/>
         </>
     )
+}
+
+const WithSocket = () => {
+    const dispatch = useAppDispatch()
+    const chats = useAppSelector((state) => state.socket.chats)
+
+    const handleNewConnection = async (data: ChatViewDTO[]) => {
+        dispatch(updateChats(data));
+    };
+
+    useEffect(() => {
+        socket.on('new-connection', handleNewConnection);
+    }, [chats]);
+
+    return (
+        <></>
+    )
+
 }
 
 
@@ -57,8 +80,6 @@ const WithUser = () => {
     return (
         <></>
     )
-
-
 }
 
 export const ROUTER = createBrowserRouter([
@@ -83,7 +104,7 @@ export const ROUTER = createBrowserRouter([
                     element: <PrivateRoute/>,
                     children: [
                         {
-                            element: <><WithNav/><WithUser/></>,
+                            element: <><WithNav/><WithUser/><WithSocket/></>,
                             children: [
                                 {
                                     path: "/",
@@ -109,6 +130,14 @@ export const ROUTER = createBrowserRouter([
                                     path: "/post/:id",
                                     element: <CommentPage/>,
                                 },
+                                {
+                                    path: "/chat",
+                                    element: <ChatPage/>
+                                },
+                                {
+                                    path: "/chat/:id",
+                                    element: <Chat/>
+                                }
                             ],
 
                         }]
