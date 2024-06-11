@@ -1,4 +1,4 @@
-import type {PostData, SingInData, SingUpData} from "./index";
+import type {PostData, SignInData, SingUpData} from "./index";
 import axios from "axios";
 import {S3Service} from "./S3Service";
 
@@ -48,7 +48,7 @@ const httpRequestService = {
             return true;
         }
     },
-    signIn: async (data: SingInData) => {
+    signIn: async (data: SignInData) => {
         const res = await axios.post(`${url}/auth/login`, data);
         if (res.status === 200) {
             localStorage.setItem("token", `Bearer ${res.data.token}`);
@@ -83,18 +83,6 @@ const httpRequestService = {
     },
     getPosts: async (query: string) => {
         const res = await server.get(`${url}/post/${query}`);
-        if (res.status === 200) {
-            return res.data;
-        }
-    },
-    getPostsPaginated: async (limit: number, before: string, after: string) => {
-        const res = await server.get(`${url}/post/`, {
-            params: {
-                limit,
-                before,
-                after,
-            },
-        });
         if (res.status === 200) {
             return res.data;
         }
@@ -235,11 +223,19 @@ const httpRequestService = {
         }
     },
 
-    createChat: async (id: string) => {
+    getUserFollowed: async () => {
+        const res = await server.get(`${url}/user/follow/followed`);
+        if (res.status === 200) {
+            return res.data;
+        }
+    },
+
+    createChat: async (id: string[], name:string) => {
         const res = await server.post(
-            `${url}/chat`,
+            `${url}/conversation`,
             {
-                users: [id],
+                receivers: id,
+                conversationName: name
             },
         );
 
@@ -277,7 +273,6 @@ const httpRequestService = {
     getCommentsByPostId: async (id: string) => {
         const res = await server.get(`${url}/comment/from_post/${id}`);
         if (res.status === 200) {
-            console.log(res)
             return res.data
         }
     },

@@ -8,5 +8,7 @@ export const StyledChatBottomBar = styled.div `
     align-items: center;
     margin-top: 6px;
     border-top: 1px solid rgb(235, 238, 240);
+    bottom: 0;
+    width: 100%;
     
 `

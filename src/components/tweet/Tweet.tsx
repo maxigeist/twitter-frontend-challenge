@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {StyledTweetContainer} from "./TweetContainer";
 import AuthorData from "./user-post-data/AuthorData";
 import type {Post} from "../../service";
@@ -23,19 +23,18 @@ const Tweet = ({post}: TweetProps) => {
     const [actualPost, setActualPost] = useState<Post>(post);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const [showCommentModal, setShowCommentModal] = useState<boolean>(false);
-    const service = useHttpRequestService();
     const navigate = useNavigate();
     const user = useSelector((state: RootState) => state.userInfo);
-
+    const service = useHttpRequestService();
 
     const handleReaction = async (type: string) => {
         const reacted = actualPost.userReactions.find(
             (r) => r.type === type
         );
         if (reacted) {
-            await service.deleteReaction(reacted.id);
+            await service.deleteReaction(reacted.id)
         } else {
-            await service.createReaction(actualPost.id, type);
+            await service.createReaction(actualPost.id, type)
         }
         const newPost = await service.getPostById(post.id);
         setActualPost(newPost);
@@ -47,6 +46,7 @@ const Tweet = ({post}: TweetProps) => {
         );
     };
 
+
     return (
         <StyledTweetContainer>
             <StyledContainer
@@ -57,17 +57,17 @@ const Tweet = ({post}: TweetProps) => {
                 maxHeight={"48px"}
             >
                 <AuthorData
-                    id={post.author.id}
-                    name={post.author.name ?? "Name"}
-                    username={post.author.username}
-                    createdAt={post.createdAt}
-                    profilePicture={post.author.profilePicture}
+                    id={post?.author?.id}
+                    name={post?.author?.name ?? "Name"}
+                    username={post?.author?.username}
+                    createdAt={post?.createdAt}
+                    profilePicture={post?.author?.profilePicture}
                 />
-                {post.authorId === user?.id && (
+                {post?.authorId === user?.id && (
                     <>
                         <DeletePostModal
                             show={showDeleteModal}
-                            id={post.id}
+                            id={post?.id}
                             onClose={() => {
                                 setShowDeleteModal(false);
                             }}
@@ -80,12 +80,12 @@ const Tweet = ({post}: TweetProps) => {
                     </>
                 )}
             </StyledContainer>
-            <StyledContainer onClick={() => navigate(`/post/${post.id}`)}>
-                <p>{post.content}</p>
+            <StyledContainer onClick={() => navigate(`/post/${post?.id}`)}>
+                <p>{post?.content}</p>
             </StyledContainer>
-            {post.images && post.images!.length > 0 && (
+            {post?.images && post?.images!.length > 0 && (
                 <StyledContainer padding={"0 0 0 10%"}>
-                    <ImageContainer images={post.images}/>
+                    <ImageContainer images={post?.images}/>
                 </StyledContainer>
             )}
             <StyledReactionsContainer>
@@ -95,21 +95,21 @@ const Tweet = ({post}: TweetProps) => {
                     reactionFunction={() =>
                         window.innerWidth > 600
                             ? setShowCommentModal(true)
-                            : navigate(`/compose/comment/${post.id}`)
+                            : navigate(`/compose/comment/${post?.id}`)
                     }
                     increment={0}
                     reacted={false}
                 />
                 <Reaction
                     img={IconType.RETWEET}
-                    count={actualPost.qtyRetweets}
+                    count={actualPost?.qtyRetweets}
                     reactionFunction={() => handleReaction("retweet")}
                     increment={1}
                     reacted={hasReactedByType("retweet")}
                 />
                 <Reaction
                     img={IconType.LIKE}
-                    count={actualPost.qtyLikes}
+                    count={actualPost?.qtyLikes}
                     reactionFunction={() => handleReaction("like")}
                     increment={1}
                     reacted={hasReactedByType("like")}

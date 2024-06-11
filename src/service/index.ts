@@ -5,7 +5,7 @@ export interface SingUpData {
     username: string;
 }
 
-export interface SingInData {
+export interface SignInData {
     username?: string;
     email?: string;
     password: string;
@@ -75,7 +75,7 @@ export interface MessageDTO {
 export interface ChatDTO {
     id: string;
     name:string;
-    users: Author[];
+    members: Author[];
     messages: MessageDTO[];
 }
 

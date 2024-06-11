@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {createBrowserRouter, Outlet, useNavigate} from "react-router-dom";
+import React, {useEffect} from "react";
+import {createBrowserRouter, Outlet} from "react-router-dom";
 import {StyledSideBarPageWrapper} from "../../pages/side-bar-page/SideBarPageWrapper";
 import NavBar from "../navbar/NavBar";
 import SignUpPage from "../../pages/auth/sign-up/SignUpPage";
@@ -13,7 +13,7 @@ import PostPage from "../../pages/post-page/PostPage";
 import {PrivateRoute} from "../private-route/PrivateRoute";
 import {PublicRoute} from "../public-route/PublicRoute";
 import {updateData} from "../../redux/user.info";
-import {useHttpRequestService} from "../../service/HttpRequestService";
+import {useGetCurrentUser} from "../../query/queries";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import Toast from "../toast/Toast";
 import ChatPage from "../../pages/chat/ChatPage";
@@ -62,24 +62,23 @@ const WithSocket = () => {
 
 
 const WithUser = () => {
-    const service = useHttpRequestService();
+
+    const {isLoading, data} = useGetCurrentUser();
     const dispatch = useAppDispatch();
-    const navigate = useNavigate();
     const handleSetUpUser = async () => {
-        try {
-            const data = await service.me();
-            dispatch(updateData(data));
-        } catch (e) {
-            navigate("/sign-in");
+        if (!isLoading){
+            dispatch(updateData(data))
         }
     }
     useEffect(() => {
         handleSetUpUser().then()
-    }, []);
+    }, [isLoading]);
 
     return (
         <></>
     )
+
+
 }
 
 export const ROUTER = createBrowserRouter([

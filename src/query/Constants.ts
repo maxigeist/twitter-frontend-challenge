@@ -1,2 +1,8 @@
 export const userInfoKey = 'userInfo'
 export const latestPosts = 'latestPosts'
+export const login = 'login'
+export const createPost = 'createPost'
+export const recommendedUsers= 'recommendedUsers'
+export const currentUser = 'currentUser'
+export const post = 'post'
+export const postComments = 'postComments'

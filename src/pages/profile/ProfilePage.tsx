@@ -13,7 +13,7 @@ import {StyledH5} from "../../components/common/text";
 import {useAppDispatch, useAppSelector} from "../../redux/hooks";
 import {RootState} from "../../redux/store";
 
-import {useGetUserProfile, useMutateOnFollow, useMutateOnUnfollow} from "../../query/queries";
+import {useGetUserProfile, useCreateFollow, useCreateUnfollow} from "../../query/queries";
 import {updateToastData} from "../../redux/toast";
 import {ToastType} from "../../components/toast/Toast";
 
@@ -31,8 +31,8 @@ const ProfilePage = () => {
     const dispatch = useAppDispatch();
     const id = useParams().id;
     const {isLoading, data} = useGetUserProfile(id)
-    const {mutation: mutationUnfollow} = useMutateOnUnfollow()
-    const {mutation: mutationFollow} = useMutateOnFollow()
+    const {mutation: mutationUnfollow} = useCreateUnfollow()
+    const {mutation: mutationFollow} = useCreateFollow()
     const navigate = useNavigate();
     const [profile, setProfile] = useState<User | undefined>();
     const {t} = useTranslation();

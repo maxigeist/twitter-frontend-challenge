@@ -14,6 +14,8 @@ interface CommentModalProps {
   onClose: () => void;
 }
 const CommentModal = ({ post, show, onClose }: CommentModalProps) => {
+
+
   return (
     <PostModal show={show} onClose={onClose}>
       <StyledContainer gap={"16px"}>

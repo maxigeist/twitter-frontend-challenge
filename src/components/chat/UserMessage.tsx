@@ -24,7 +24,13 @@ export const MessageWrapper = styled.div`
 
 export const StyledMessageP = styled.p`
     margin: 0;
-    color: ${(props) => props.theme.colors.white};
+    
+    
+    font-size: 14px;
+`
+export const StyledMessageSender = styled.p `
+    margin: 0;
+    font-size: 16px;
     font-weight: 600;
     `
 
@@ -32,10 +38,12 @@ export const StyledMessageP = styled.p`
 
 export const StyledMessageContainer = styled.div`
     display: flex;
+    flex-direction: column;
     border-radius: 10px;
     padding: 8px;
     width: fit-content;
     margin: 4px 0;
+    color: ${(props) => props.theme.colors.white};
     
     background-color: ${(props: MessageContainerProps) => {
         switch (props.type) {

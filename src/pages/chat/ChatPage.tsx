@@ -1,24 +1,32 @@
-import React, {useState, useEffect} from 'react';
-import {socket} from "../../socket/socket";
-import {ChatViewDTO} from "../../service";
+import React, {useState} from 'react';
 import {StyledScrollableContainer} from "../../components/common/Container";
-import {StyledH3, StyledH5} from "../../components/common/text";
+import {StyledH3} from "../../components/common/text";
 import ChatPreview from "../../components/chat/ChatPreview";
-import {useAppDispatch, useAppSelector} from "../../redux/hooks";
+import {useAppSelector} from "../../redux/hooks";
 import {StyledChatPageContainer} from "../../components/chat/ChatPageContainer";
-import {StyledHeaderContainer} from "../home-page/components/header/HeaderContainer";
+import CreateChatModal from "../../components/chat/create-chat/CreateChatModal";
+import StyledButton, {ButtonSize, ButtonVariant} from "../../components/styled-button/StyledButton";
+import { StyledChatHeader } from '../../components/chat/StyledChatHeader';
 
 const ChatPage = () => {
     const chats = useAppSelector((state) => state.socket.chats)
+    const [openChatModal, setOpenChatModal] = useState(false)
+
+    const handleCloseModal = () => {
+        setOpenChatModal(false)
+    }
 
 
     return (
         <>
+            {openChatModal && <CreateChatModal onClose={() => handleCloseModal()}/>}
             <StyledChatPageContainer>
-                <StyledHeaderContainer>
+                <StyledChatHeader>
                     <StyledH3>Chats</StyledH3>
-                    <button></button>
-                </StyledHeaderContainer>
+                    <StyledButton size={ButtonSize.LARGE} buttonVariant={ButtonVariant.FULFILLED}
+                                  onClick={() => setOpenChatModal(true)}>Start a conversation</StyledButton>
+
+                </StyledChatHeader>
                 <StyledScrollableContainer>
                     {chats?.map((chat) =>
                         <ChatPreview name={chat.name}

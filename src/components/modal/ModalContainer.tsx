@@ -13,9 +13,7 @@ export const StyledModalContainer = styled.div`
   transform: translate(-50%, -50%);
   top: 50%;
   left: 50%;
-  max-width: 286px;
   width: auto;
-  height: 279px;
   box-sizing: border-box;
   z-index: 3;
   p {

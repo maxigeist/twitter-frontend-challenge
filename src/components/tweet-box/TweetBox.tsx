@@ -13,7 +13,7 @@ import {StyledContainer} from "../common/Container";
 import {StyledButtonContainer} from "./ButtonContainer";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
-import {useGetLatestPosts} from "../../query/queries";
+import {useGetPostComments} from "../../query/queries";
 import {updateToastData} from "../../redux/toast";
 import {ToastType} from "../toast/Toast";
 
@@ -32,7 +32,7 @@ const TweetBox = ({parentId = '', close, mobile}: TweetBoxProps) => {
     const [imagesPreview, setImagesPreview] = useState<string[]>([]);
 
     const {length, query} = useSelector((state: RootState) => state.user);
-    const {isLoading, data: postsRq} = useGetLatestPosts(query)
+    const {isLoading: loadingComments, data: commentsData} = useGetPostComments(parentId)
     const httpService = useHttpRequestService();
     const dispatch = useDispatch();
     const {t} = useTranslation();

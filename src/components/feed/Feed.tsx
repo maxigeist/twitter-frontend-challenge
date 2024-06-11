@@ -30,13 +30,14 @@ const Feed = ({posts, loading}: FeedProps) => {
     }
 
     useEffect(() => {
-        if (posts!!.length > 0) {
+        if (posts!!.length > 0 && !loading) {
             handleSetLastPost()
         }
     }, [loading, dispatch]);
 
     return (
         <StyledScrollableContainer width={"100%"} alignItems={"center"} onScroll={handleScroll}>
+            {loading && <Loader/>}
             {posts && posts
                 .filter((post, index, self) => {
                     return self.findIndex((p) => p.id === post.id) === index;
@@ -44,8 +45,6 @@ const Feed = ({posts, loading}: FeedProps) => {
                 .map((post: Post) => (
                     <Tweet key={post.id} post={post}/>
                 ))}
-            {loading && <Loader/>}
-
         </StyledScrollableContainer>
     );
 };
