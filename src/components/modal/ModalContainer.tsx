@@ -14,6 +14,7 @@ export const StyledModalContainer = styled.div`
   top: 50%;
   left: 50%;
   width: auto;
+    max-width: 400px;
   box-sizing: border-box;
   z-index: 3;
   p {

@@ -13,6 +13,7 @@ import {useAppDispatch, useAppSelector} from "../../../redux/hooks";
 import {updateToastData} from "../../../redux/toast";
 import {ToastType} from "../../toast/Toast";
 import {updateChats} from "../../../redux/socket";
+import chat from "../Chat";
 
 
 interface ChatModalProps {
@@ -43,8 +44,13 @@ const CreateChatModal = ({onClose}: ChatModalProps) => {
     }
 
     const handleCreatChat = async () => {
-        const chat = await service.createChat(membersId, chatName)
-        dispatch(updateChats([...chats, chat]))
+        try{
+            await service.createChat(membersId, chatName)
+            dispatch(updateChats([...chats, chat]))
+        }catch (error){
+            dispatch(updateToastData({message:'The chat already exists', type: ToastType.ALERT}))
+        }
+
         onClose()
     }
 

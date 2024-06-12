@@ -4,7 +4,6 @@ import AuthorData from "./user-post-data/AuthorData";
 import type {Post} from "../../service";
 import {StyledReactionsContainer} from "./ReactionsContainer";
 import Reaction from "./reaction/Reaction";
-import {useHttpRequestService} from "../../service/HttpRequestService";
 import {IconType} from "../icon/Icon";
 import {StyledContainer} from "../common/Container";
 import ThreeDots from "../common/ThreeDots";
@@ -14,6 +13,7 @@ import CommentModal from "../comment/comment-modal/CommentModal";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {RootState} from "../../redux/store";
+import {useCreateDeleteReaction} from "../../query/queries";
 
 interface TweetProps {
     post: Post;
@@ -25,19 +25,17 @@ const Tweet = ({post}: TweetProps) => {
     const [showCommentModal, setShowCommentModal] = useState<boolean>(false);
     const navigate = useNavigate();
     const user = useSelector((state: RootState) => state.userInfo);
-    const service = useHttpRequestService();
+    const {createReactionMutation, deleteReactionMutation} = useCreateDeleteReaction()
 
     const handleReaction = async (type: string) => {
         const reacted = actualPost.userReactions.find(
             (r) => r.type === type
         );
         if (reacted) {
-            await service.deleteReaction(reacted.id)
+            deleteReactionMutation.mutate(reacted?.id)
         } else {
-            await service.createReaction(actualPost.id, type)
+            createReactionMutation.mutate({id:post.id, type:type})
         }
-        const newPost = await service.getPostById(post.id);
-        setActualPost(newPost);
     };
 
     const hasReactedByType = (type: string): boolean => {

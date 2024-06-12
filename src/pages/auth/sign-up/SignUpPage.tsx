@@ -9,6 +9,7 @@ import Button from "../../../components/button/Button";
 import {ButtonType} from "../../../components/button/StyledButton";
 import {StyledH3} from "../../../components/common/text";
 import {Formik} from "formik";
+import * as Yup from 'yup';
 
 interface SignUpData {
     name: string;
@@ -26,7 +27,6 @@ const SignUpPage = () => {
 
     const handleSubmitSignUp = async (data: SignUpData) => {
         const {confirmPassword, ...requestData} = data
-        console.log('hola')
         try {
             await httpRequestService.signUp(requestData)
             navigate('/')
@@ -36,6 +36,22 @@ const SignUpPage = () => {
             }
         }
     };
+
+    const SignupSchema = Yup.object().shape({
+        name: Yup.string().required('Required'),
+        password: Yup.string()
+            .min(8, 'The passwordd should be longer!')
+            .matches(/^(?=.*[a-z])/, 'Must contain at least one lowercase character')
+            .matches(/^(?=.*[A-Z])/, 'Must contain at least one uppercase character')
+            .matches(/^(?=.*[0-9])/, 'Must contain at least one number')
+            .matches(/^(?=.*[!@#%&])/, 'Must contain at least one special character')
+            .required('Required'),
+        username: Yup.string().required('Required'),
+        email: Yup.string().email('Invalid email').required('Required'),
+        confirmPassword: Yup.string()
+            .required('Confirm Password is required')
+            .oneOf([Yup.ref('password')], 'Passwords must match')
+    });
 
 
     return (
@@ -47,20 +63,7 @@ const SignUpPage = () => {
                         <StyledH3>{t("title.register")}</StyledH3>
                     </div>
                     <Formik initialValues={{name: '', username: '', email: '', password: '', confirmPassword: ''}}
-                            validate={(values) => {
-                                const errors: { password?: string, email?: string } = {};
-                                if (values.password !== values.confirmPassword) {
-                                    errors.password = 'Passwords do not match'
-                                } else if (
-                                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                                ) {
-                                    errors.email = 'Invalid email address';
-                                }
-                                else if(values.password.length < 8 && !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).+$/.test(values.password) ) {
-                                    errors.password = 'The password is not strong enough'
-                                }
-                                return errors;
-                            }}
+                            validationSchema={SignupSchema}
                             onSubmit={(values, {setSubmitting}) => {
                                 handleSubmitSignUp(values).then((res) => console.log(res))
                                 setSubmitting(false)
@@ -101,8 +104,8 @@ const SignUpPage = () => {
                                         onChange={handleChange}
                                         value={values.email}
                                     />
-                                    {touched.email && <p className={'error-message'}>{errors.email}
-                                    </p>}
+                                    {touched.email && <text className={'error-message'}>{errors.email}
+                                    </text>}
                                     <LabeledInput
                                         name='password'
                                         type="password"
@@ -113,8 +116,8 @@ const SignUpPage = () => {
                                         onChange={handleChange}
                                         value={values.password}
                                     />
-                                    {touched.password && <p className={'error-message'}>{errors.password}
-                                    </p>}
+                                    {touched.password && <text className={'error-message'}>{errors.password}
+                                    </text>}
                                     <LabeledInput
                                         name='confirmPassword'
                                         type="password"
@@ -125,8 +128,8 @@ const SignUpPage = () => {
                                         onChange={handleChange}
                                         value={values.confirmPassword}
                                     />
-                                    {touched.password && <p className={'error-message'}>{errors.password}
-                                    </p>}
+                                    {touched.password && <text className={'error-message'}>{errors.confirmPassword}
+                                    </text>}
                                 </div>
                                 <div style={{
                                     display: "flex", flexDirection: "column", alignItems: 'center',

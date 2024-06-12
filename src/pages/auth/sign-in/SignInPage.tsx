@@ -37,6 +37,15 @@ const SignInPage = () => {
                     </div>
 
                     <Formik initialValues={{email: '', password: ''}}
+                            validate={(values) => {
+                                const errors: { email?: string } = {};
+                                if (
+                                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                                ) {
+                                    errors.email = 'Invalid email address';
+                                }
+                                return errors;
+                            }}
                             onSubmit={(values, {setSubmitting}) => {
                                 httpRequestService
                                     .signIn(values)
@@ -100,7 +109,6 @@ const SignInPage = () => {
                         )}
                     </Formik>
                     <p className={"error-message"}>{error && t("error.login")}</p>
-
                 </div>
             </div>
         </AuthWrapper>

@@ -72,7 +72,7 @@ const WithUser = () => {
     }
     useEffect(() => {
         handleSetUpUser().then()
-    }, [isLoading]);
+    }, [data]);
 
     return (
         <></>

@@ -7,6 +7,8 @@ import {
   StyledOverflowContainer,
 } from "../../common/Container";
 import { StyledRemoveIconContainer } from "./RemoveIconContainer";
+import validator from "validator";
+import isUUID = validator.isUUID;
 
 interface TweetImageProps {
   src: string;
@@ -35,14 +37,14 @@ const TweetImage = ({
           </StyledRemoveIconContainer>
         )}
         <StyledTweetImage
-          src={process.env.REACT_APP_AWS_BUCKET_ADDRESS + src}
+          src={isUUID(src) ? process.env.REACT_APP_AWS_BUCKET_ADDRESS + src : src }
           alt={alt}
           onClick={() => setShowModal(true)}
         />
       </StyledOverflowContainer>
       <ImageModal
         show={showModal}
-        src={process.env.REACT_APP_AWS_BUCKET_ADDRESS + src}
+        src={isUUID(src) ? process.env.REACT_APP_AWS_BUCKET_ADDRESS  + src : src }
         alt={alt}
         onClose={() => setShowModal(false)}
       />

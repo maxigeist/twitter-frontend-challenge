@@ -10,8 +10,8 @@
 // ***********************************************
 //
 //
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
+
+
 //
 //
 // -- This is a child command --
@@ -25,13 +25,17 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+
+Cypress.Commands.add('login', () => {
+    cy.request({
+        method: 'POST',
+        url: 'http://localhost:8080/api/auth/login',
+        body: {
+            email: 'geistmaximo@gmail.com',
+            password: 'MepasQlt14092#%',
+        }
+    })
+        .then((resp) => {
+            window.localStorage.setItem('token', resp.body.token)
+        })
+})

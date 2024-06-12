@@ -18,6 +18,9 @@ server.interceptors.response.use(
             localStorage.clear()
             window.location.href = "/sign-in"
         }
+        else if (error.respe.status === 409){
+            throw error
+        }
         return error
     },
 )
@@ -60,7 +63,11 @@ const httpRequestService = {
             return crypto.randomUUID()
         })
         console.log(imagesId)
-        const res = await server.post(`${url}/post`, {images: imagesId, content: data.content, parentId: data.parentId});
+        const res = await server.post(`${url}/post`, {
+            images: imagesId,
+            content: data.content,
+            parentId: data.parentId
+        });
         if (res.status === 201) {
             const {upload} = S3Service;
             for (const imageUrl of res.data.images) {
@@ -230,18 +237,17 @@ const httpRequestService = {
         }
     },
 
-    createChat: async (id: string[], name:string) => {
-        const res = await server.post(
-            `${url}/conversation`,
-            {
-                receivers: id,
-                conversationName: name
-            },
-        );
-
-        if (res.status === 201) {
-            return res.data;
-        }
+    createChat: async (id: string[], name: string) => {
+            const res = await server.post(
+                `${url}/conversation`,
+                {
+                    receivers: id,
+                    conversationName: name
+                },
+            );
+            if(res.status === 201){
+                return res.data
+            }
     },
 
     getChat: async (id: string) => {

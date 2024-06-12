@@ -69,6 +69,7 @@ const TweetBox = ({parentId = '', close, mobile}: TweetBoxProps) => {
 
     const handleAddImage = (newImages: File[]) => {
         setImages(newImages);
+        console.log(newImages)
         const newImagesPreview = newImages.map((i) => URL.createObjectURL(i));
         setImagesPreview(newImagesPreview);
     };

@@ -36,14 +36,6 @@ export const useGetUserToken = (signInData: SignInData) => {
     return {isLoading, data}
 }
 
-export const useCreatePost = (postData: PostData) => {
-    const {isLoading, data} = useQuery({
-        queryKey: [createPost, postData],
-        queryFn: () => httpService.service.createPost(postData), enabled: !!postData
-    })
-    return {isLoading, data}
-}//Esto debería ser una mutation
-
 export const useGetRecommendedUsers = (limit: number, skip: number) => {
     const {isLoading, data} = useQuery({
         queryKey: [recommendedUsers, limit, skip],
@@ -90,6 +82,7 @@ export const useCreateUnfollow = () => {
     const mutation = useMutation({
         mutationFn: (id: string) => httpService.service.unfollowUser(id),
         onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: [currentUser]})
             await queryClient.invalidateQueries({queryKey: [userInfoKey]})
         }
     })
@@ -101,8 +94,28 @@ export const useCreateFollow = () => {
     const mutation = useMutation({
         mutationFn: (id: string) => httpService.service.followUser(id),
         onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: [currentUser]})
             await queryClient.invalidateQueries({queryKey: [userInfoKey]})
+
         }
     })
     return {mutation}
+}
+
+export const useCreateDeleteReaction = () => {
+    const queryClient = useQueryClient()
+    const createReactionMutation = useMutation({
+        mutationFn: ({id, type}: {id: string, type: string}) => httpService.service.createReaction(id, type),
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: [post]})
+        }
+    })
+    const deleteReactionMutation = useMutation({
+        mutationFn: (id:string) => httpService.service.deleteReaction(id),
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: [post]})
+        }
+    })
+
+    return {createReactionMutation, deleteReactionMutation}
 }

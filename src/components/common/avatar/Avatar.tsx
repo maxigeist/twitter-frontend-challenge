@@ -2,6 +2,7 @@ import React from "react";
 import { StyledAvatarContainer } from "./AvatarContainer";
 import NameImage from "./NameImage";
 
+
 interface AvatarProps {
   src: string;
   alt: string;

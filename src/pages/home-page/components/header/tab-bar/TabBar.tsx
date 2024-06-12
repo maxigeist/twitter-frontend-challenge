@@ -5,6 +5,7 @@ import {useTranslation} from "react-i18next";
 import {useAppDispatch} from "../../../../../redux/hooks";
 import {StyledTabBarContainer} from "./TabBarContainer";
 import {useHttpRequestService} from "../../../../../service/HttpRequestService";
+import {LIMIT} from "../../../../../util/Constants";
 
 const TabBar = () => {
     const [activeFirstPage, setActiveFirstPage] = useState(true);
@@ -27,7 +28,7 @@ const TabBar = () => {
             <Tab
                 active={activeFirstPage}
                 text={t("header.for-you")}
-                onClick={() => handleClick(true, "")}
+                onClick={() => handleClick(true, `?limit=${LIMIT}`)}
             />
             <Tab
                 active={!activeFirstPage}
