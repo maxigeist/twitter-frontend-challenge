@@ -15,5 +15,7 @@ jobs:
           node-version: '20.x'
       - name: Install dependencies
         run: npm i
+      - name: Start app
+        run: npm start
       - name: Run tests
         run: npx cypress run
