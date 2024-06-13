@@ -27,7 +27,6 @@ export const useGetFeed = () => {
       });
     } catch (e) {
       setError(true);
-      console.log(e);
     }
   }, [query]);
 

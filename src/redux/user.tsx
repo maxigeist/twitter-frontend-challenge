@@ -4,6 +4,7 @@ import {ChatDTO, Post} from "../service";
 
 type InitalStateType = {
   feed: Post[];
+  profileFeed:[];
   query: string;
   length: number;
   lastPost:string;
@@ -12,6 +13,7 @@ type InitalStateType = {
 
 const initialState: InitalStateType = {
   feed: [],
+  profileFeed:[],
   length: LIMIT,
   query: `?limit=${LIMIT}`,
   lastPost:''
@@ -23,6 +25,9 @@ const userSlice = createSlice({
   reducers: {
     updateFeed: (state, action) => {
       state.feed = action.payload;
+    },
+    updateProfileFeed: (state,action) => {
+      state.profileFeed = action.payload
     },
     setLength: (state, action) => {
       state.length = action.payload;
@@ -46,7 +51,7 @@ const userSlice = createSlice({
   },
 });
 
-export const {updateFeed, setLength, setQuery, setChat, addMessage, setLastPost} =
+export const {updateFeed, setLength, setQuery, setChat, addMessage, setLastPost, updateProfileFeed} =
     userSlice.actions;
 
 export default userSlice.reducer;

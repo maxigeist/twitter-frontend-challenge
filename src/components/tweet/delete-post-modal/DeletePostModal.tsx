@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { DeleteIcon } from "../../icon/Icon";
 import Modal from "../../modal/Modal";
 import Button from "../../button/Button";
-import { updateFeed } from "../../../redux/user";
+import {updateFeed, updateProfileFeed} from "../../../redux/user";
 import { useHttpRequestService } from "../../../service/HttpRequestService";
 import { useTranslation } from "react-i18next";
 import { ButtonType } from "../../button/StyledButton";
@@ -22,7 +22,7 @@ export const DeletePostModal = ({
   onClose,
 }: DeletePostModalProps) => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const feed = useAppSelector((state) => state.user.feed);
+  const feed = useAppSelector((state) => state.user.profileFeed);
   const dispatch = useAppDispatch();
   const service = useHttpRequestService();
   const { t } = useTranslation();
@@ -31,7 +31,7 @@ export const DeletePostModal = ({
     try {
       service.deletePost(id).then((res) => console.log(res));
       const newFeed = feed.filter((post: Post) => post.id !== id);
-      dispatch(updateFeed(newFeed));
+      dispatch(updateProfileFeed(newFeed));
       handleClose();
     } catch (error) {
       console.log(error);

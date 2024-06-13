@@ -14,18 +14,19 @@ import {InputContainerSize} from "../../../components/styled-input/InputContaine
 import {useAppDispatch} from "../../../redux/hooks";
 import {updateToastData} from "../../../redux/toast";
 import {ToastType} from "../../../components/toast/Toast";
+import * as Yup from "yup";
 
 const SignInPage = () => {
     const [error, setError] = useState(false);
+    const dispatch = useAppDispatch()
 
     const httpRequestService = useHttpRequestService();
     const navigate = useNavigate();
-    const dispatch = useAppDispatch()
     const {t} = useTranslation();
 
-    useEffect(() => {
-
-    }, [error]);
+    const SignInSchema = Yup.object().shape({
+        email: Yup.string().email('Invalid email').required('Required'),
+    });
 
     return (
         <AuthWrapper>
@@ -37,15 +38,7 @@ const SignInPage = () => {
                     </div>
 
                     <Formik initialValues={{email: '', password: ''}}
-                            validate={(values) => {
-                                const errors: { email?: string } = {};
-                                if (
-                                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                                ) {
-                                    errors.email = 'Invalid email address';
-                                }
-                                return errors;
-                            }}
+                            validationSchema={SignInSchema}
                             onSubmit={(values, {setSubmitting}) => {
                                 httpRequestService
                                     .signIn(values)
@@ -61,6 +54,8 @@ const SignInPage = () => {
                               handleChange,
                               handleSubmit,
                               isSubmitting,
+                              touched,
+                                errors
                           }) => (
                             <form onSubmit={handleSubmit}>
                                 <div className={"input-container"}>
@@ -73,6 +68,8 @@ const SignInPage = () => {
                                         error={error}
                                         onChange={handleChange}
                                         value={values.email}/>
+                                    {touched.email && <text className={'error-message'}>{errors.email}
+                                    </text>}
                                     <LabeledInput
                                         name="password"
                                         type="password"

@@ -32,7 +32,7 @@ const TweetBox = ({parentId = '', close, mobile}: TweetBoxProps) => {
     const [imagesPreview, setImagesPreview] = useState<string[]>([]);
 
     const {length, query} = useSelector((state: RootState) => state.user);
-    const {isLoading: loadingComments, data: commentsData} = useGetPostComments(parentId)
+
     const httpService = useHttpRequestService();
     const dispatch = useDispatch();
     const {t} = useTranslation();
@@ -45,7 +45,7 @@ const TweetBox = ({parentId = '', close, mobile}: TweetBoxProps) => {
     const handleSubmit = async () => {
         try {
             await httpService.createPost({content, parentId: parentId ? parentId : '', images});
-            dispatch(updateToastData({message: "The tweet was created correctly",type:ToastType.SUCCESS, show:true }))
+            dispatch(updateToastData({message: "The tweet was created correctly",type:ToastType.SUCCESS}))
             setContent("");
             setImages([]);
             setImagesPreview([]);

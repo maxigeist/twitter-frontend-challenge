@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyledScrollableContainer} from "../../components/common/Container";
 import {StyledH3} from "../../components/common/text";
 import ChatPreview from "../../components/chat/ChatPreview";
@@ -15,7 +15,6 @@ const ChatPage = () => {
     const handleCloseModal = () => {
         setOpenChatModal(false)
     }
-
 
     return (
         <>

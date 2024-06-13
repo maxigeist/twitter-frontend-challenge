@@ -15,7 +15,6 @@ const PostPage = () => {
     const {data:post, isLoading} = useGetPost(id);
 
 
-
     return (
         <>
             <StyledContainer borderRight="1px solid #ebeef0">

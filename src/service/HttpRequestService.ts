@@ -215,7 +215,7 @@ const httpRequestService = {
     },
 
     getChats: async () => {
-        const res = await server.get(`${url}/chat`);
+        const res = await server.get(`${url}/conversation`);
 
         if (res.status === 200) {
             return res.data;

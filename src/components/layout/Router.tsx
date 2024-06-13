@@ -60,7 +60,6 @@ const WithSocket = () => {
 
 }
 
-
 const WithUser = () => {
 
     const {isLoading, data} = useGetCurrentUser();
