@@ -181,44 +181,29 @@ export const ActiveExploreIcon = (props: IconProps) => {
 
 export const MessageIcon = (props: IconProps) => {
     return (
-        <svg
-            width={props.width ? props.width : "24"}
-            height={props.height ? props.height : "24"}
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            onClick={props.onClick}
-            cursor={"pointer"}
-        >
-            <g id="SVG=Message">
-                <path
-                    id="Vector"
-                    d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM19 18H5C4.45 18 4 17.55 4 17V8L10.94 12.34C11.59 12.75 12.41 12.75 13.06 12.34L20 8V17C20 17.55 19.55 18 19 18ZM12 11L4 6H20L12 11Z"
-                    fill={props.color ? props.color : "black"}
-                />
-            </g>
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.width ? props.width : "24"}
+             height={props.height ? props.height : "24"} viewBox="0 0 24 24" fill="none"
+             onClick={props.onClick}
+             cursor={"pointer"}
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             className="icon icon-tabler icons-tabler-outline icon-tabler-message-circle">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path
+                d="M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1"/>
         </svg>
     );
 };
 
 export const ActiveMessageIcon = (props: IconProps) => {
     return (
-        <svg
-            width={props.width ? props.width : "24"}
-            height={props.height ? props.height : "24"}
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            onClick={props.onClick}
-            cursor={"pointer"}
-        >
-            <g id="SVG=Message Hover, Style=Style12">
-                <path
-                    id="Vector"
-                    d="M20 4H4C2.9 4 2.01 4.9 2.01 6L2 18C2 19.1 2.9 20 4 20H20C21.1 20 22 19.1 22 18V6C22 4.9 21.1 4 20 4ZM19.6 8.25L12.53 12.67C12.21 12.87 11.79 12.87 11.47 12.67L4.4 8.25C4.15 8.09 4 7.82 4 7.53C4 6.86 4.73 6.46 5.3 6.81L12 11L18.7 6.81C19.27 6.46 20 6.86 20 7.53C20 7.82 19.85 8.09 19.6 8.25Z"
-                    fill={props.color ? props.color : "black"}
-                />
-            </g>
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.width ? props.width : "24"}
+             height={props.height ? props.height : "24"} viewBox="0 0 24 24" fill="currentColor"
+             onClick={props.onClick}
+             cursor={"pointer"}
+             className="icon icon-tabler icons-tabler-filled icon-tabler-message-circle">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path
+                d="M5.821 4.91c3.899 -2.765 9.468 -2.539 13.073 .535c3.667 3.129 4.168 8.238 1.152 11.898c-2.841 3.447 -7.965 4.583 -12.231 2.805l-.233 -.101l-4.374 .931l-.04 .006l-.035 .007h-.018l-.022 .005h-.038l-.033 .004l-.021 -.001l-.023 .001l-.033 -.003h-.035l-.022 -.004l-.022 -.002l-.035 -.007l-.034 -.005l-.016 -.004l-.024 -.005l-.049 -.016l-.024 -.005l-.011 -.005l-.022 -.007l-.045 -.02l-.03 -.012l-.011 -.006l-.014 -.006l-.031 -.018l-.045 -.024l-.016 -.011l-.037 -.026l-.04 -.027l-.002 -.004l-.013 -.009l-.043 -.04l-.025 -.02l-.006 -.007l-.056 -.062l-.013 -.014l-.011 -.014l-.039 -.056l-.014 -.019l-.005 -.01l-.042 -.073l-.007 -.012l-.004 -.008l-.007 -.012l-.014 -.038l-.02 -.042l-.004 -.016l-.004 -.01l-.017 -.061l-.007 -.018l-.002 -.015l-.005 -.019l-.005 -.033l-.008 -.042l-.002 -.031l-.003 -.01v-.016l-.004 -.054l.001 -.036l.001 -.023l.002 -.053l.004 -.025v-.019l.008 -.035l.005 -.034l.005 -.02l.004 -.02l.018 -.06l.003 -.013l1.15 -3.45l-.022 -.037c-2.21 -3.747 -1.209 -8.391 2.413 -11.119z"/>
         </svg>
     );
 };
@@ -325,38 +310,30 @@ export const CancelIcon = (props: IconProps) => {
 
 export const ChatIcon = (props: IconProps) => {
     return (
-        <svg
-            width={props.width ? props.width : "24"}
-            height={props.height ? props.height : "24"}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            onClick={props.onClick}
-            viewBox="0 0 512 512"
-            cursor={"pointer"}
-        >
-            <path
-                d="M160 368c26.5 0 48 21.5 48 48v16l72.5-54.4c8.3-6.2 18.4-9.6 28.8-9.6H448c8.8 0 16-7.2 16-16V64c0-8.8-7.2-16-16-16H64c-8.8 0-16 7.2-16 16V352c0 8.8 7.2 16 16 16h96zm48 124l-.2 .2-5.1 3.8-17.1 12.8c-4.8 3.6-11.3 4.2-16.8 1.5s-8.8-8.2-8.8-14.3V474.7v-6.4V468v-4V416H112 64c-35.3 0-64-28.7-64-64V64C0 28.7 28.7 0 64 0H448c35.3 0 64 28.7 64 64V352c0 35.3-28.7 64-64 64H309.3L208 492z"
-                fill={props.color ? props.color : "black"}
-            />
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.width ? props.width : "24"}
+             height={props.height ? props.height : "24"} viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             onClick={props.onClick}
+             cursor={"pointer"}
+             className="icon icon-tabler icons-tabler-outline icon-tabler-message">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M8 9h8"/>
+            <path d="M8 13h6"/>
+            <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"/>
         </svg>
     );
 };
 export const ActiveChatIcon = (props: IconProps) => {
     return (
 
-        <svg
-            width={props.width ? props.width : "24"}
-            height={props.height ? props.height : "24"}
-            viewBox="0 0 512 512"
-            fill="none"
-            onClick={props.onClick}
-            xmlns="http://www.w3.org/2000/svg"
-            cursor={"pointer"}
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" width={props.width ? props.width : "24"}
+             height={props.height ? props.height : "24"} viewBox="0 0 24 24" fill="currentColor"
+             onClick={props.onClick}
+             cursor={"pointer"}
+             className="icon icon-tabler icons-tabler-filled icon-tabler-message">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path
-                d="M64 0C28.7 0 0 28.7 0 64V352c0 35.3 28.7 64 64 64h96v80c0 6.1 3.4 11.6 8.8 14.3s11.9 2.1 16.8-1.5L309.3 416H448c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64z"
-                fill={props.color ? props.color : "black"}
-            />
+                d="M18 3a4 4 0 0 1 4 4v8a4 4 0 0 1 -4 4h-4.724l-4.762 2.857a1 1 0 0 1 -1.508 -.743l-.006 -.114v-2h-1a4 4 0 0 1 -3.995 -3.8l-.005 -.2v-8a4 4 0 0 1 4 -4zm-4 9h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2m2 -4h-8a1 1 0 1 0 0 2h8a1 1 0 0 0 0 -2"/>
         </svg>
     )
 }

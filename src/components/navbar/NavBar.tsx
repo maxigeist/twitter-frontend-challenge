@@ -70,8 +70,8 @@ const NavBar = () => {
                         onClick={() => {
                             navigate('/chat')
                         }}
-                        icon={IconType.CHAT}
-                        selectedIcon={IconType.ACTIVE_CHAT}
+                        icon={IconType.MESSAGE}
+                        selectedIcon={IconType.ACTIVE_MESSAGE}
                         active={location.pathname === '/chat'}
                     />
                     <StyledTweetButton
